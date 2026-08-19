@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ContourSlim B2B — Plano de mídia e funil</title>
+<style>
+  :root{
+    --ink:#1b1a1f; --ink-2:#4a4753; --ink-3:#7b7787;
+    --line:#e5e1ea; --line-2:#f2eff6;
+    --bg:#fbfafc; --card:#ffffff;
+    --accent:#7d3c6a; --accent-soft:#f7edf4;
+    --ok:#2f6f52; --ok-soft:#e9f4ee;
+    --warn:#8a5a12; --warn-soft:#fdf3e2;
+    --bad:#9b2f31; --bad-soft:#fdecec;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto;padding:0 24px 96px}
+  header.top{padding:64px 0 40px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:650}
+  h1{font-size:36px;line-height:1.16;margin:14px 0 12px;letter-spacing:-.02em;font-weight:700}
+  .sub{color:var(--ink-2);font-size:17px;max-width:64ch;margin:0}
+  .meta{margin-top:22px;font-size:13px;color:var(--ink-3)}
+  h2{font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:56px 0 6px;font-weight:700;padding-top:8px}
+  h2 + .h2sub{font-size:25px;line-height:1.26;letter-spacing:-.015em;margin:0 0 20px;font-weight:680}
+  h3{font-size:18px;margin:34px 0 8px;letter-spacing:-.01em;font-weight:660}
+  h4{font-size:15px;margin:22px 0 6px;font-weight:680}
+  p{margin:0 0 14px} ul,ol{margin:0 0 16px;padding-left:22px} li{margin:0 0 7px}
+  strong{font-weight:640} a{color:var(--accent)}
+  code{background:var(--line-2);padding:1px 6px;border-radius:5px;font-size:13.5px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:18px 0}
+  .verdict{background:var(--accent-soft);border:1px solid #e7d3e0;border-radius:14px;padding:22px 24px;margin:22px 0}
+  .verdict p:last-child{margin-bottom:0}
+  .flag{border-radius:12px;padding:16px 18px;margin:16px 0;font-size:15px;border:1px solid}
+  .flag p:last-child{margin-bottom:0}
+  .flag.bad{background:var(--bad-soft);border-color:#f3d3d3}
+  .flag.warn{background:var(--warn-soft);border-color:#f0e0c2}
+  .flag.ok{background:var(--ok-soft);border-color:#cfe6d9}
+  .flag .lab{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+  .flag.bad .lab{color:var(--bad)} .flag.warn .lab{color:var(--warn)} .flag.ok .lab{color:var(--ok)}
+  table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14.5px}
+  th{text-align:left;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);
+     font-weight:700;padding:0 12px 8px 0;border-bottom:1px solid var(--line)}
+  td{padding:11px 12px 11px 0;border-bottom:1px solid var(--line-2);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  .num{font-variant-numeric:tabular-nums;white-space:nowrap}
+  .funnel{margin:24px 0}
+  .stage{display:grid;grid-template-columns:120px 1fr;gap:0;border:1px solid var(--line);
+    border-bottom:none;background:#fff}
+  .stage:last-child{border-bottom:1px solid var(--line)}
+  .stage:first-child{border-radius:14px 14px 0 0} .stage:last-child{border-radius:0 0 14px 14px}
+  .stage .s{background:var(--accent-soft);padding:16px;border-right:1px solid var(--line-2)}
+  .stage .s b{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  .stage .s span{font-size:13px;color:var(--ink-2);display:block;margin-top:4px;line-height:1.4}
+  .stage .c{padding:16px 20px;font-size:14.5px;line-height:1.58}
+  .stage .c b{font-weight:660}
+  .budget{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:20px 0}
+  .bcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}
+  .bcard .p{font-size:24px;font-weight:700;color:var(--accent);letter-spacing:-.02em}
+  .bcard .t{font-size:14px;font-weight:660;margin-top:4px}
+  .bcard .d{font-size:12.5px;color:var(--ink-2);margin-top:5px;line-height:1.45}
+  .weeks{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;margin:20px 0}
+  .wk{display:grid;grid-template-columns:110px 1fr;border-bottom:1px solid var(--line-2)}
+  .wk:last-child{border-bottom:none}
+  .wk .l{background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:12.5px;padding:14px 12px;
+    border-right:1px solid var(--line-2);letter-spacing:.03em}
+  .wk .r{padding:14px 18px;font-size:14.5px;line-height:1.55}
+  .pill{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    padding:3px 8px;border-radius:99px;background:var(--accent-soft);color:var(--accent);margin-left:6px;vertical-align:2px}
+  .pill.g{background:var(--ok-soft);color:var(--ok)} .pill.r{background:var(--bad-soft);color:var(--bad)}
+  .pill.y{background:var(--warn-soft);color:var(--warn)}
+  .foot{font-size:13px;color:var(--ink-3);margin-top:10px}
+  hr{border:none;border-top:1px solid var(--line);margin:52px 0}
+  .em{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);
+    border-radius:0 12px 12px 0;padding:16px 20px;margin:16px 0;font-size:14.5px}
+  .em .h{font-weight:680;margin-bottom:4px}
+  @media(max-width:640px){
+    h1{font-size:28px} h2+.h2sub{font-size:21px} .wrap{padding:0 18px 64px}
+    .stage{grid-template-columns:1fr} .stage .s{border-right:none;border-bottom:1px solid var(--line-2)}
+    .wk{grid-template-columns:1fr} .wk .l{border-right:none;border-bottom:1px solid var(--line-2)}
+    table{font-size:13.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="eyebrow">ContourSlim B2B · Documento 2 de 2</div>
+  <h1>Plano de mídia e funil</h1>
+  <p class="sub">Como transformar 8 mil contatos de médicos e tráfego frio em clínicas comprando kit todo mês — com a estrutura de campanhas, a régua de qualificação e a operação comercial que sustentam isso.</p>
+  <div class="meta">11 de agosto de 2026 · Complementa o estudo de expansão B2B</div>
+</header>
+
+<h2>O ponto de partida</h2>
+<div class="h2sub">Você não está gerando demanda — está criando uma categoria</div>
+
+<div class="verdict">
+  <p>Nenhum cirurgião plástico acorda pensando "preciso de um fornecedor de malha compressiva". A demanda não é declarada: hoje ele prescreve e o paciente se vira. Isso tem duas consequências que definem todo o plano:</p>
+  <p><strong>O volume de busca no Google é baixo</strong> — então Search vira canal de <em>eficiência</em>, não de escala. Pega quem já procura, barato, mas não enche o funil.</p>
+  <p><strong>A escala vem de interrupção no Meta</strong> — onde é preciso, no mesmo criativo, <em>criar o problema</em> ("seu paciente compra a cinta errada e o resultado da sua cirurgia é o que aparece torto") e oferecer a solução. Criativo de catálogo não funciona aqui.</p>
+</div>
+
+<h2>1 · O funil</h2>
+<div class="h2sub">Cinco etapas, cada uma com um único trabalho</div>
+
+<div class="funnel">
+  <div class="stage">
+    <div class="s"><b>Etapa 1</b><span>Atenção</span></div>
+    <div class="c"><b>Meta Ads (Reels, Feed, Stories) + e-mail 1-a-1 para os 8k.</b> Trabalho: fazer o médico reconhecer um problema que ele já vive mas nunca nomeou — a fase pós-operatória fora do controle dele. Métrica: CTR e custo por clique no link. <span class="pill">70% do orçamento</span></div>
+  </div>
+  <div class="stage">
+    <div class="s"><b>Etapa 2</b><span>Captura</span></div>
+    <div class="c"><b>Landing page com formulário de 7 campos.</b> Trabalho: converter interesse em contato identificado e qualificado. O campo "cirurgias por mês" é o que separa clínica de curioso. Métrica: taxa de conversão da LP e <em>% de leads com CRM/CNPJ válido</em>.</div>
+  </div>
+  <div class="stage">
+    <div class="s"><b>Etapa 3</b><span>Contato</span></div>
+    <div class="c"><b>Redirecionamento automático para o WhatsApp do consultor da UF</b>, com mensagem pré-preenchida, + registro simultâneo no CRM. Trabalho: começar a conversa no minuto da intenção. Métrica: % de leads que abrem conversa e tempo até a primeira resposta humana.</div>
+  </div>
+  <div class="stage">
+    <div class="s"><b>Etapa 4</b><span>Primeira compra</span></div>
+    <div class="c"><b>Kit piloto sem pedido mínimo.</b> Trabalho: eliminar o risco da primeira compra. Uma clínica não fecha contrato de fornecimento por anúncio — ela testa 5 kits. Métrica: % de leads que compram em 30 dias e ticket da primeira compra.</div>
+  </div>
+  <div class="stage">
+    <div class="s"><b>Etapa 5</b><span>Recompra</span></div>
+    <div class="c"><b>Onde está o dinheiro de verdade.</b> Régua de recompra por WhatsApp calibrada pelo volume cirúrgico declarado no formulário, reposição programada, upgrade para linha personalizada. Métrica: recompra em 60 dias e receita recorrente por clínica. <span class="pill g">é isso que paga o CAC</span></div>
+  </div>
+</div>
+
+<div class="em">
+  <div class="h">A oferta de entrada é o item que mais move o resultado</div>
+  O <strong>Kit Piloto</strong> — 5 kits, sem pedido mínimo, com troca de tamanho garantida — é o que transforma lead em cliente. Sem ele, a LP entrega contatos que o comercial não consegue fechar, porque a objeção real não é preço: é "e se não servir no meu paciente e eu ficar com estoque parado?". Definir esse kit é a decisão comercial mais importante da fase 0.
+</div>
+
+<h2>2 · Estrutura de campanhas</h2>
+<div class="h2sub">Meta, Google e e-mail, com o papel de cada um</div>
+
+<h3>Meta Ads — o motor de escala</h3>
+<table>
+  <tr><th>Campanha</th><th>Público</th><th>Objetivo</th><th>Papel</th></tr>
+  <tr>
+    <td><strong>PROSPEC · Lookalike</strong></td>
+    <td>LAL 1% e 3% da semente limpa (convertidos na LP + clientes com opt-in + engajamento 365d)</td>
+    <td>Conversões (Lead)</td>
+    <td>Volume principal. Só entra em operação depois que a semente tiver massa mínima — ver seção 3.</td>
+  </tr>
+  <tr>
+    <td><strong>PROSPEC · Aberto</strong></td>
+    <td>Advantage+ / público amplo com exclusões, BR, 28–60 anos</td>
+    <td>Conversões (Lead)</td>
+    <td>Roda desde o dia 1, enquanto a semente do lookalike não existe. O algoritmo encontra o padrão; em B2B de nicho costuma surpreender.</td>
+  </tr>
+  <tr>
+    <td><strong>PROSPEC · Interesses</strong></td>
+    <td>Teste de segmentação por cargo/setor e interesses adjacentes (medicina estética, congressos, entidades)</td>
+    <td>Conversões (Lead)</td>
+    <td>Teste controlado. A Meta removeu segmentação detalhada ligada a saúde em jan/2022 — <em>confirmar no gerenciador o que ainda existe por profissão</em> antes de orçar.</td>
+  </tr>
+  <tr>
+    <td><strong>RTG · Objeção</strong></td>
+    <td>Visitou a LP em 30d e não converteu; assistiu 50%+ de vídeo em 30d</td>
+    <td>Conversões (Lead)</td>
+    <td>Criativo diferente: prova técnica, FAQ comercial, tabela de compressão. Baixo orçamento, maior taxa de conversão do conjunto.</td>
+  </tr>
+  <tr>
+    <td><strong>RTG · Base opt-in</strong></td>
+    <td>Público personalizado só com quem deu opt-in no e-mail</td>
+    <td>Conversões (Lead)</td>
+    <td>Entra depois da campanha de e-mail. É o caminho legal para aproveitar os 8k.</td>
+  </tr>
+</table>
+
+<div class="flag warn">
+  <span class="lab">Decisão técnica: LP × Lead Ads</span>
+  <p>O formulário instantâneo do Meta entrega lead mais barato e de <strong>qualidade muito pior</strong> — e num funil onde o valor está na recompra da clínica, lead ruim custa tempo de consultor, que é o recurso escasso. <strong>Recomendação: LP como padrão.</strong> Se testar Lead Ads, use formulário de "intenção mais alta" com as mesmas 7 perguntas — nunca o formulário curto.</p>
+</div>
+
+<h3>Google Ads — o canal de eficiência</h3>
+<table>
+  <tr><th>Campanha</th><th>Termos</th><th>Observação</th></tr>
+  <tr><td><strong>Search · Fornecedor</strong></td><td>"cinta pós cirúrgica atacado", "fornecedor malha compressiva", "kit pós operatório para clínica", "cinta pós cirúrgica CNPJ", "distribuidor cinta modeladora"</td><td>Correspondência de frase e exata. Volume baixo, intenção máxima. Normalmente o CPL mais barato do projeto.</td></tr>
+  <tr><td><strong>Search · Marca</strong></td><td>"contourslim atacado", "contourslim profissional", "contourslim revenda"</td><td>Proteção de marca. Centavos, evita que concorrente compre o termo.</td></tr>
+  <tr><td><strong>Search · Concorrência</strong></td><td>Termos de marca de concorrentes + "atacado/revendedor"</td><td>Permitido dar lance no termo, <strong>proibido usar a marca alheia no texto do anúncio</strong>. Volume pequeno, mas é lead pronto.</td></tr>
+  <tr><td><strong>Demand Gen</strong></td><td>—</td><td>Só depois de 50+ conversões acumuladas na conta. Antes disso não há sinal para o algoritmo.</td></tr>
+</table>
+
+<div class="flag ok">
+  <span class="lab">Achado que pode destravar o Google</span>
+  <p>Em maio/2025 o Google <strong>excluiu da categoria sensível "Saúde"</strong> o conteúdo "direcionado a profissionais de saúde no exercício da profissão". Na prática isso libera <em>Customer Match</em> e <em>públicos semelhantes</em> para campanha B2B — recursos que ficam bloqueados em anúncio de saúde para paciente. O changelog não especifica escopo geográfico e a certificação formal relacionada está restrita a EUA, Canadá e Nova Zelândia. <strong>Abrir chamado no suporte do Google Ads na semana 1</strong> para confirmar se vale no Brasil; se valer, é uma vantagem relevante sobre qualquer concorrente.</p>
+</div>
+
+<h3>E-mail — como usar os 8 mil sem queimar o ativo</h3>
+<p>A lista não é um público de anúncio. É uma <strong>lista de prospecção 1-a-1</strong>, e o objetivo da sequência não é vender: é <strong>obter opt-in</strong>, para então poder anunciar legalmente para essa base e usá-la como semente.</p>
+<table>
+  <tr><th>#</th><th>Conteúdo</th><th>Objetivo</th></tr>
+  <tr><td class="num">1</td><td>Apresentação identificada: quem é a ContourSlim, <strong>de onde veio o contato</strong>, por que está falando com ele. Um único link para a LP. Opt-out visível.</td><td>Transparência (exigência da LGPD) + primeiro clique</td></tr>
+  <tr><td class="num">2</td><td>Conteúdo técnico sem venda: tabela de compressão por procedimento e tempo de uso. PDF.</td><td>Autoridade + identificar quem abre</td></tr>
+  <tr><td class="num">3</td><td>O caso comercial: como funciona o kit institucional, o que muda na experiência do paciente.</td><td>Apresentar a oferta</td></tr>
+  <tr><td class="num">4</td><td>Convite direto ao Kit Piloto, com prazo.</td><td>Conversão</td></tr>
+</table>
+
+<div class="flag bad">
+  <span class="lab">Regras que não podem ser puladas</span>
+  <p><strong>Subdomínio de envio separado</strong> (ex.: <code>envio.contourslim.com.br</code>) — se disparar pelo domínio principal e a base reagir mal, você derruba a entregabilidade do e-commerce inteiro.<br>
+  <strong>SPF, DKIM e DMARC configurados</strong> antes do primeiro envio.<br>
+  <strong>Aquecimento gradual:</strong> 100/dia na primeira semana, 300/dia na segunda, 500/dia depois. Disparar 8 mil de uma vez é bloqueio garantido.<br>
+  <strong>Opt-out de um clique</strong> em todos os e-mails, honrado imediatamente.<br>
+  <strong>Nada de disparo em massa no WhatsApp</strong> — a política de mensagens comerciais exige opt-in prévio; o número é banido antes de a ANPD sequer saber.</p>
+</div>
+
+<h2>3 · A sequência que respeita a LGPD</h2>
+<div class="h2sub">Por que o lookalike não pode começar na semana 1</div>
+
+<p>Subir os 8 mil como público personalizado exige declarar à Meta que você obteve o consentimento dos titulares. Se a lista foi comprada ou raspada de cadastro público, essa declaração é falsa — e a penalidade prática é <strong>bloqueio da conta de anúncios</strong>, não multa. O caminho limpo custa cerca de três semanas a mais e elimina o risco:</p>
+
+<table>
+  <tr><th>Semana</th><th>O que roda</th><th>Semente do lookalike</th></tr>
+  <tr><td class="num">1–2</td><td>Meta público amplo + Google Search + e-mail 1 e 2</td><td>Ainda não existe</td></tr>
+  <tr><td class="num">3–4</td><td>Acima + retargeting da LP + e-mail 3 e 4</td><td>Convertidos na LP + opt-ins do e-mail começam a acumular</td></tr>
+  <tr><td class="num">5+</td><td>Entra o <strong>Lookalike 1%</strong>, que assume a maior parte do orçamento de prospecção</td><td>Base limpa e com sinal de intenção real — semente muito melhor que a lista fria seria</td></tr>
+</table>
+
+<p>Há um bônus técnico nisso: um lookalike construído sobre <strong>quem converteu</strong> costuma performar melhor do que um construído sobre uma lista de 8 mil médicos que nunca demonstraram interesse. O caminho legal é também o caminho mais eficaz.</p>
+
+<p class="foot"><strong>Antes de qualquer coisa:</strong> confirmar com o cliente a origem da lista. Se for base própria de relacionamento — clientes, contatos de evento, cadastro no site — o risco cai drasticamente e o cronograma pode ser encurtado. Se for comprada, siga a sequência acima sem atalho.</p>
+
+<h2>4 · Régua de qualificação</h2>
+<div class="h2sub">O que o comercial faz com cada lead, e em quanto tempo</div>
+
+<table>
+  <tr><th>Faixa</th><th>Perfil declarado no formulário</th><th>SLA</th><th>Ação</th></tr>
+  <tr><td><strong>A</strong> <span class="pill g">prioridade</span></td><td>16+ cirurgias/mês, com CNPJ</td><td class="num">15 min</td><td>Ligação do consultor da UF + proposta de kit institucional. Se possível, visita.</td></tr>
+  <tr><td><strong>B</strong></td><td>6–15 cirurgias/mês</td><td class="num">1 hora</td><td>WhatsApp do consultor + oferta do Kit Piloto.</td></tr>
+  <tr><td><strong>C</strong></td><td>Até 5 cirurgias/mês, ou fisioterapeuta / clínica de estética</td><td class="num">24 horas</td><td>Fluxo automatizado com tabela e link de pedido. Não consome consultor.</td></tr>
+  <tr><td><strong>D</strong></td><td>Sem CRM nem CNPJ — pessoa física</td><td class="num">automático</td><td>Redireciona para o e-commerce B2C. Não é lead perdido, é venda de varejo.</td></tr>
+</table>
+
+<div class="flag warn">
+  <span class="lab">O maior risco operacional do projeto</span>
+  <p>Não é o CPL. É o <strong>tempo de resposta</strong>. Um lead B2B de clínica que espera 6 horas já falou com outro fornecedor ou desistiu do assunto. Se não houver alguém com SLA de 15 minutos no horário comercial, <strong>não ligue a campanha</strong> — você vai pagar por leads que esfriam em fila. Definir isso é pré-requisito, não detalhe de execução.</p>
+</div>
+
+<h2>5 · Orçamento</h2>
+<div class="h2sub">Distribuição e lógica de escala</div>
+
+<p>O cenário abaixo é uma <strong>referência estrutural</strong>, não uma previsão: não existe benchmark público confiável de CPL para B2B médico em compressão no Brasil. O que importa aqui é a <em>proporção</em> entre canais e a regra de escala.</p>
+
+<div class="budget">
+  <div class="bcard"><div class="p">55%</div><div class="t">Meta · Prospecção</div><div class="d">Amplo nas semanas 1–4, migrando para lookalike 1% a partir da semana 5</div></div>
+  <div class="bcard"><div class="p">10%</div><div class="t">Meta · Retargeting</div><div class="d">Menor verba, maior taxa de conversão do conjunto</div></div>
+  <div class="bcard"><div class="p">25%</div><div class="t">Google · Search</div><div class="d">Limitado por volume de busca — se não gastar tudo, devolve para o Meta</div></div>
+  <div class="bcard"><div class="p">10%</div><div class="t">Reserva de teste</div><div class="d">Criativos novos e segmentações não validadas, sem contaminar as campanhas que funcionam</div></div>
+</div>
+
+<h4>O teto do CAC — a conta que autoriza investir</h4>
+<p>Preencher na fase 0 com o preço B2B real, e usar como régua de decisão de escala:</p>
+<div class="card">
+  <p style="margin:0"><strong>Receita mensal por clínica</strong> = cirurgias/mês × kits por paciente × preço B2B do kit<br>
+  <strong>Valor da clínica em 12 meses</strong> = receita mensal × 12 × margem<br>
+  <strong>Teto do CAC</strong> = valor em 12 meses ÷ 3 <span class="foot">(regra conservadora de payback)</span><br>
+  <strong>CPL máximo aceitável</strong> = teto do CAC × taxa de conversão de lead em cliente</p>
+</div>
+<p>Uma clínica com 10 cirurgias/mês comprando 1 kit por paciente gera receita recorrente relevante e previsível — é isso que permite pagar por lead um valor que seria absurdo em B2C, e é o argumento central para o cliente aprovar o orçamento.</p>
+
+<h4>Quando escalar</h4>
+<ul>
+  <li><strong>Suba 20% a cada 3 dias</strong> em conjuntos com CPL dentro da meta e qualidade estável — subida brusca reinicia o aprendizado.</li>
+  <li><strong>Não escale por CPL isolado.</strong> Um CPL que cai junto com a queda do % de leads com CNPJ válido significa que a campanha está encontrando curiosos, não clínicas. É piora disfarçada de melhora.</li>
+  <li><strong>Trave o orçamento</strong> enquanto o comercial não estiver dando conta do volume atual com o SLA definido. Lead não atendido é dinheiro queimado duas vezes.</li>
+</ul>
+
+<h2>6 · Criativos</h2>
+<div class="h2sub">Cinco ângulos, e o que a Meta reprova</div>
+
+<table>
+  <tr><th>Ângulo</th><th>Ideia central</th><th>Formato</th></tr>
+  <tr><td><strong>1. Perda de controle</strong></td><td>"Você controla cada milímetro da cirurgia. E depois entrega a recuperação para uma cinta comprada no shopping."</td><td>Vídeo 20–30s, fala direta</td></tr>
+  <tr><td><strong>2. Resultado é seu</strong></td><td>Compressão errada compromete o resultado — e o paciente insatisfeito volta para o cirurgião, não para a loja.</td><td>Vídeo ou estático com texto</td></tr>
+  <tr><td><strong>3. Kit por procedimento</strong></td><td>Mostrar o kit fechado sobre a mesa: o que vem, para qual cirurgia, por quanto tempo.</td><td>Carrossel</td></tr>
+  <tr><td><strong>4. Marca da clínica</strong></td><td>"Sua marca na recuperação do seu paciente." Peça personalizada.</td><td>Estático premium</td></tr>
+  <tr><td><strong>5. Operacional</strong></td><td>Fim do "o paciente comprou o tamanho errado": grade completa, troca garantida, entrega nacional.</td><td>Vídeo estilo depoimento de secretária/gestora de clínica</td></tr>
+</table>
+
+<div class="flag bad">
+  <span class="lab">O que não pode ir para o criativo</span>
+  <p><strong>Antes e depois lado a lado</strong> e resultados "inesperados ou improváveis" — reprovação certa na política de saúde e bem-estar da Meta, e restrito pela Res. CFM 2.336/2023, art. 14.<br>
+  <strong>Close ampliado de partes do corpo</strong> (zoom em abdômen, beliscar gordura).<br>
+  <strong>Copy em 2ª pessoa que insinua condição</strong> — "fez lipo?", "incomodado com a barriga?" viola a política de atributos pessoais. Reescreva em 3ª pessoa: "para quem opera todo mês".<br>
+  <strong>Rosto, nome ou CRM de médico</strong> em anúncio da marca — CEM art. 115 e Res. 2.336/2023, art. 9º, XVIII, "c".<br>
+  <strong>Promessa de resultado</strong> de qualquer natureza.</p>
+  <p style="margin-top:10px">Vantagem estrutural do B2B: criativo focado em protocolo, kit e operação da clínica <strong>não toca em nenhuma dessas linhas</strong>. O risco de reprovação cai perto de zero — algo que a campanha B2C da marca provavelmente enfrenta hoje.</p>
+</div>
+
+<h4>Cadência de produção</h4>
+<p>3 criativos por ângulo no lote inicial (15 peças), 4 novos por semana a partir da semana 3. Em públicos de nicho a fadiga chega rápido: acompanhe frequência acima de 2,5 e queda de CTR como gatilho de troca.</p>
+
+<h2>7 · Mensuração</h2>
+<div class="h2sub">O que instalar antes de gastar o primeiro real</div>
+
+<ul>
+  <li><strong>Pixel do Meta + API de Conversões</strong> — servidor, não só navegador. Sem CAPI o sinal se perde e o lookalike aprende errado.</li>
+  <li><strong>Eventos separados por qualidade:</strong> <code>Lead</code> (formulário enviado) e <code>LeadQualificado</code> (faixa A ou B). <strong>Otimize para o segundo.</strong> É o que ensina o algoritmo a buscar clínica em vez de curioso.</li>
+  <li><strong>Conversões offline / API de conversões do CRM</strong> — devolver ao Meta e ao Google quem efetivamente <em>comprou</em>. Este é o passo que a maioria pula, e é o que separa uma conta que escala de uma que estagnou.</li>
+  <li><strong>UTM em tudo</strong>, gravadas no CRM junto com o lead, para rastrear campanha → lead → venda → recompra.</li>
+  <li><strong>GA4 + Google Tag</strong> com o mesmo par de eventos.</li>
+</ul>
+
+<h4>Painel de diagnóstico</h4>
+<table>
+  <tr><th>Sintoma</th><th>Onde olhar</th></tr>
+  <tr><td>CPL alto, CTR alto</td><td>A LP não está entregando o que o anúncio prometeu. Problema de página, não de mídia.</td></tr>
+  <tr><td>CPL baixo, poucos CNPJ/CRM válidos</td><td>Público errado. O criativo está atraindo consumidor final. Reforce linguagem profissional no anúncio.</td></tr>
+  <tr><td>Lead qualificado, mas não abre WhatsApp</td><td>Fricção no redirecionamento ou mensagem pré-preenchida mal escrita. Teste o texto do disparo.</td></tr>
+  <tr><td>Abre conversa e some</td><td>SLA ou script comercial. Não é mídia — pare de mexer nas campanhas.</td></tr>
+  <tr><td>Compra o Kit Piloto e não recompra</td><td>Produto ou pós-venda. A régua de recompra não existe ou o kit não resolveu.</td></tr>
+</table>
+
+<h2>8 · Cronograma de 90 dias</h2>
+<div class="h2sub">Do zero à conta escalando</div>
+
+<div class="weeks">
+  <div class="wk"><div class="l">Semana 0</div><div class="r"><b>Fundação.</b> Definir Kit Piloto, tabela B2B e pedido mínimo · confirmar notificação ANVISA · mapear representantes por UF ou definir atendimento centralizado · revisão jurídica do texto de oferta · definir quem atende e com qual SLA.</div></div>
+  <div class="wk"><div class="l">Semana 1</div><div class="r"><b>Construção.</b> LP no subdomínio · pixel + CAPI + GA4 · CRM e roteamento por UF · configurar SPF/DKIM/DMARC no subdomínio de envio · abrir chamado no Google sobre a exclusão de "profissionais de saúde" · produzir os 15 criativos iniciais.</div></div>
+  <div class="wk"><div class="l">Semana 2</div><div class="r"><b>No ar.</b> Sobem Meta amplo + Google Search · e-mail 1 e 2 com aquecimento a 100/dia · primeiro ajuste de LP com dados reais de comportamento.</div></div>
+  <div class="wk"><div class="l">Semanas 3–4</div><div class="r"><b>Aprendizado.</b> Entra retargeting · e-mail 3 e 4 · primeiro corte de criativos por desempenho · calibrar a régua de qualificação com os leads que chegaram de verdade · fechar as primeiras vendas de Kit Piloto.</div></div>
+  <div class="wk"><div class="l">Semanas 5–8</div><div class="r"><b>Escala.</b> Entra o Lookalike 1% com semente limpa e assume a prospecção · começa a devolver conversão offline (compra) para as plataformas · escala de 20% a cada 3 dias nos conjuntos saudáveis · segundo lote de criativos.</div></div>
+  <div class="wk"><div class="l">Semanas 9–12</div><div class="r"><b>Consolidação.</b> Régua de recompra ativa · relatório de unit economics com dados reais (CAC, taxa de recompra, receita por clínica) · decisão fundamentada sobre a fase 2, a área do profissional com preço atrás de login.</div></div>
+</div>
+
+<h2>9 · Riscos</h2>
+<div class="h2sub">Ordenados por probabilidade de acontecer</div>
+<table>
+  <tr><th>Risco</th><th>Sinal de alerta</th><th>Mitigação</th></tr>
+  <tr><td><strong>Comercial não dá conta</strong> <span class="pill r">mais provável</span></td><td>Leads acumulando sem primeiro contato</td><td>Travar orçamento antes de escalar. É limite de operação, não de mídia.</td></tr>
+  <tr><td><strong>Lead sem qualidade</strong></td><td>% de CNPJ/CRM válido em queda</td><td>Endurecer o formulário, reforçar linguagem profissional no criativo, otimizar para <code>LeadQualificado</code>.</td></tr>
+  <tr><td><strong>Volume insuficiente no Google</strong></td><td>Search não gasta o orçamento</td><td>Esperado. Realocar para Meta e usar Search como piso de eficiência, não como canal de escala.</td></tr>
+  <tr><td><strong>Conta bloqueada</strong></td><td>Reprovações repetidas</td><td>Nunca subir a lista fria; manter criativo B2B longe de corpo e antes/depois.</td></tr>
+  <tr><td><strong>Produto sem notificação ANVISA</strong></td><td>—</td><td>Verificar na semana 0. Anunciar produto para saúde não regularizado é infração sanitária.</td></tr>
+  <tr><td><strong>Kit Piloto não fecha</strong></td><td>Lead qualificado que conversa e não compra</td><td>A objeção é risco de estoque, não preço. Revisar garantia de troca e volume mínimo antes de mexer em desconto.</td></tr>
+</table>
+
+<hr>
+<p class="foot">Documento complementar ao estudo de expansão B2B. Os percentuais de orçamento são estrutura de partida, para calibrar com dados reais a partir da semana 4. Pontos regulatórios devem ser confirmados formalmente antes de escalar investimento.</p>
+
+</div>
+</body>
+</html>
