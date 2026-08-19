@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ContourSlim B2B — Estudo de expansão e arquitetura da página</title>
+<style>
+  :root{
+    --ink:#1b1a1f; --ink-2:#4a4753; --ink-3:#7b7787;
+    --line:#e5e1ea; --line-2:#f2eff6;
+    --bg:#fbfafc; --card:#ffffff;
+    --accent:#7d3c6a; --accent-soft:#f7edf4;
+    --ok:#2f6f52; --ok-soft:#e9f4ee;
+    --warn:#8a5a12; --warn-soft:#fdf3e2;
+    --bad:#9b2f31; --bad-soft:#fdecec;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 24px 96px}
+  header.top{padding:64px 0 40px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:650}
+  h1{font-size:38px;line-height:1.15;margin:14px 0 12px;letter-spacing:-.02em;font-weight:700}
+  .sub{color:var(--ink-2);font-size:17px;max-width:62ch;margin:0}
+  .meta{margin-top:22px;font-size:13px;color:var(--ink-3)}
+  h2{font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);
+     margin:56px 0 6px;font-weight:700;padding-top:8px}
+  h2 + .h2sub{font-size:26px;line-height:1.25;letter-spacing:-.015em;margin:0 0 20px;font-weight:680}
+  h3{font-size:18px;margin:32px 0 8px;letter-spacing:-.01em;font-weight:660}
+  h4{font-size:15px;margin:22px 0 6px;font-weight:660;color:var(--ink)}
+  p{margin:0 0 14px}
+  ul,ol{margin:0 0 16px;padding-left:22px}
+  li{margin:0 0 7px}
+  strong{font-weight:640}
+  a{color:var(--accent)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:18px 0}
+  .card.tight{padding:18px 20px}
+  .verdict{background:var(--accent-soft);border:1px solid #e7d3e0;border-radius:14px;padding:22px 24px;margin:22px 0}
+  .verdict p:last-child{margin-bottom:0}
+  .flag{border-radius:12px;padding:16px 18px;margin:16px 0;font-size:15px;border:1px solid}
+  .flag p:last-child{margin-bottom:0}
+  .flag.bad{background:var(--bad-soft);border-color:#f3d3d3}
+  .flag.warn{background:var(--warn-soft);border-color:#f0e0c2}
+  .flag.ok{background:var(--ok-soft);border-color:#cfe6d9}
+  .flag .lab{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+  .flag.bad .lab{color:var(--bad)} .flag.warn .lab{color:var(--warn)} .flag.ok .lab{color:var(--ok)}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:22px 0}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .stat .n{font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:1.1;color:var(--accent)}
+  .stat .l{font-size:12.5px;color:var(--ink-2);margin-top:6px;line-height:1.4}
+  table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14.5px}
+  th{text-align:left;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);
+     font-weight:700;padding:0 12px 8px 0;border-bottom:1px solid var(--line)}
+  td{padding:11px 12px 11px 0;border-bottom:1px solid var(--line-2);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  .num{font-variant-numeric:tabular-nums;white-space:nowrap}
+  .steps{counter-reset:s;list-style:none;padding:0;margin:20px 0}
+  .steps li{counter-increment:s;position:relative;padding-left:44px;margin-bottom:18px}
+  .steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:28px;height:28px;
+    border-radius:50%;background:var(--accent);color:#fff;font-size:13px;font-weight:700;
+    display:flex;align-items:center;justify-content:center}
+  .steps b{display:block;font-weight:660;margin-bottom:2px}
+  .wire{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:20px 0}
+  .wire .row{display:grid;grid-template-columns:38px 1fr;border-bottom:1px solid var(--line-2)}
+  .wire .row:last-child{border-bottom:none}
+  .wire .n{background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:13px;
+    display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line-2)}
+  .wire .c{padding:14px 18px}
+  .wire .t{font-weight:660;font-size:15px;margin-bottom:3px}
+  .wire .d{font-size:14px;color:var(--ink-2);line-height:1.55}
+  .wire .d em{color:var(--accent);font-style:normal;font-weight:600}
+  .pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    padding:3px 9px;border-radius:99px;background:var(--accent-soft);color:var(--accent);margin-left:8px;vertical-align:2px}
+  .pill.g{background:var(--ok-soft);color:var(--ok)}
+  .pill.r{background:var(--bad-soft);color:var(--bad)}
+  .q{border-left:3px solid var(--accent);padding:2px 0 2px 18px;margin:20px 0;color:var(--ink-2);font-size:16.5px}
+  .src{font-size:13px;color:var(--ink-3);line-height:1.7}
+  .src a{color:var(--ink-3)}
+  hr{border:none;border-top:1px solid var(--line);margin:52px 0}
+  .foot{font-size:13px;color:var(--ink-3);margin-top:12px}
+  @media(max-width:640px){
+    h1{font-size:29px} h2+.h2sub{font-size:21px} .wrap{padding:0 18px 64px}
+    table{font-size:13.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="eyebrow">ContourSlim · Expansão B2B</div>
+  <h1>Como vender para médicos sem esbarrar no que a lei proíbe — e o que colocar no ar em 7 dias</h1>
+  <p class="sub">Estudo de mercado, análise regulatória e arquitetura recomendada da página de captação profissional, antes do site institucional.</p>
+  <div class="meta">11 de agosto de 2026 · Documento de trabalho</div>
+</header>
+
+<h2>Resumo executivo</h2>
+<div class="h2sub">Três conclusões que mudam o plano original</div>
+
+<div class="verdict">
+  <p><strong>1. O mercado está aberto — ninguém produtizou o canal B2B.</strong> Verifiquei ~20 marcas brasileiras de pós-cirúrgico. Nenhuma publica tabela de atacado, pedido mínimo ou área do profissional com login. O B2B do setor inteiro roda em WhatsApp, no boca a boca. A única que comunica direto para o profissional de saúde é a Cinta-se Nova (Curitiba), e mesmo ela opera sem produtizar.</p>
+  <p><strong>2. O pitch "revenda e ganhe margem" é inviável — e esse é o detalhe que quebra a maioria dos projetos assim.</strong> O Código de Ética Médica proíbe o médico de obter vantagem pela comercialização de produtos ao paciente (arts. 58, 59, 68, 69). Desde março de 2025, a Res. CFM 2.386/2024 ainda obriga o médico a <em>declarar publicamente</em> qualquer vínculo remunerado com indústria. Todo o material de venda precisa ser reescrito em cima de <strong>custo, protocolo e experiência do paciente</strong> — não de margem.</p>
+  <p><strong>3. O modelo do Mar Negro (mapa de representantes) é o mecanismo errado para este caso.</strong> Ele funciona quando existe rede instalada de revendedores e a proposta é "compre no atacado". Aqui o tráfego é frio, vem de lookalike, chega no celular, e o mapa insere uma escolha <em>antes</em> da captura do lead. A recomendação é <strong>capturar primeiro e rotear depois</strong>, automaticamente por UF. Detalho abaixo.</p>
+</div>
+
+<h2>1 · O mercado</h2>
+<div class="h2sub">Escala confirmada, cadeia informal</div>
+
+<div class="stats">
+  <div class="stat"><div class="n">2,35 mi</div><div class="l">cirurgias plásticas estéticas/ano no Brasil (ISAPS 2024) — 1º lugar mundial em procedimentos cirúrgicos</div></div>
+  <div class="stat"><div class="n">884 mil</div><div class="l">cirurgias/ano que exigem malha compressiva por protocolo (lipo, mama, abdômen, glúteo)</div></div>
+  <div class="stat"><div class="n">7 mil+</div><div class="l">cirurgiões plásticos membros da SBCP</div></div>
+  <div class="stat"><div class="n">R$ 250–350</div><div class="l">ticket de varejo por peça pós-cirúrgica; R$ 400–800 gastos pelo paciente por cirurgia</div></div>
+  <div class="stat"><div class="n">8,8 mi</div><div class="l">mulheres adultas com lipedema no Brasil (12,3% — J Vasc Bras)</div></div>
+  <div class="stat"><div class="n">1 de 20</div><div class="l">marcas verificadas com comunicação B2B explícita para profissional de saúde</div></div>
+</div>
+
+<h3>Quem decide, quem compra, quem paga</h3>
+<p>A cadeia hoje funciona assim: <strong>o cirurgião prescreve a marca, o paciente compra sozinho, a clínica não transaciona</strong>. Marcas como a New Form vivem inteiramente disso — o claim central do site é "recomendada pelos melhores cirurgiões plásticos há mais de 18 anos", sem nenhuma transação B2B por trás.</p>
+<p>Incluir a cinta no pacote cirúrgico já aparece no mercado como <em>diferencial competitivo</em> de clínica, não como padrão. É exatamente aí que mora a abertura comercial.</p>
+
+<h3>Os públicos, em ordem de facilidade de venda</h3>
+<table>
+  <tr><th>Público</th><th>Tamanho</th><th>Trava do CEM?</th><th>Leitura</th></tr>
+  <tr><td><strong>Clínicas PJ de cirurgia plástica</strong></td><td class="num">~7 mil cirurgiões SBCP</td><td>Parcial</td><td>Alvo principal. Compra como insumo do pacote, não para revender.</td></tr>
+  <tr><td><strong>Fisioterapeutas dermatofuncionais</strong></td><td class="num">206 mil fisios no total</td><td class="num">Não</td><td>Fora do CEM. Público subexplorado, atende o pós-op por semanas.</td></tr>
+  <tr><td><strong>Clínicas de estética</strong></td><td class="num">376 mil CNPJs ativos*</td><td class="num">Não</td><td>Volume alto, ticket menor. Pode revender livremente.</td></tr>
+  <tr><td><strong>Vasculares / lipedema</strong></td><td>não publicado</td><td>Parcial</td><td>Nicho em crescimento acelerado, quase sem concorrência dedicada.</td></tr>
+  <tr><td><strong>Lojas ortopédicas e distribuidores</strong></td><td>—</td><td class="num">Não</td><td>Canal clássico de atacado. Aqui sim o modelo Mar Negro faria sentido.</td></tr>
+</table>
+<p class="foot">* CNAE 9602-5/02 inclui salões e MEIs de beleza — é um teto, não o número de clínicas.</p>
+
+<h2>2 · A trava regulatória</h2>
+<div class="h2sub">O que não pode ser dito, e o que dizer no lugar</div>
+
+<div class="flag bad">
+  <span class="lab">Não pode</span>
+  <p><strong>Oferecer margem, comissão, bonificação ou cupom remunerado ao médico.</strong> CEM art. 69 veda "obter vantagem pelo encaminhamento de procedimentos, pela prescrição e/ou comercialização de medicamentos, órteses, próteses ou implantes"; art. 68 veda exercer a profissão com dependência de organização que comercialize produtos de prescrição; art. 59 veda vantagem por paciente encaminhado. Reforçado pelo Decreto 20.931/1932 e por pareceres estaduais (CRM-MS 22/2022 é o mais duro: proíbe o médico até de ser sócio de empresa que comercialize produtos médicos).</p>
+</div>
+
+<div class="flag bad">
+  <span class="lab">Não pode</span>
+  <p><strong>Usar rosto, nome ou CRM de médico em anúncio da marca.</strong> CEM art. 115 veda ao médico "participar de anúncios de empresas comerciais". A Res. CFM 2.336/2023, art. 9º, XVIII, "c" é explícita: ao anunciar produtos usados em procedimentos, o médico "não anuncie marcas comerciais e fabricantes". Depoimento de cirurgião em criativo pago é risco para ele e para a marca.</p>
+</div>
+
+<div class="flag warn">
+  <span class="lab">Atenção</span>
+  <p><strong>Res. CFM 2.386/2024 ("Sunshine Act brasileiro"), em vigor desde 01/03/2025.</strong> Qualquer vínculo remunerado entre médico e indústria de insumos de saúde — consultoria, palestra, permuta, embaixador — precisa ser declarado ao CRM em 60 dias e vira <em>informação pública</em>. Programas de embaixadores precisam ser desenhados assumindo que serão publicados.</p>
+</div>
+
+<div class="flag ok">
+  <span class="lab">Pode, e é aqui que está a venda</span>
+  <p><strong>Vender para a clínica PJ como insumo do procedimento</strong> — a clínica compra o kit e embute no pacote cirúrgico (repasse de custo, não margem sobre produto avulso; o parecer CRM-MS 30/2018 admite repasse de custo sem lucro).<br>
+  <strong>Personalização white-label</strong> — a peça sai com a marca da clínica. É experiência do paciente, não comércio. Único diferencial B2B real já testado no mercado brasileiro, com um só ocupante.<br>
+  <strong>Indicação sem contrapartida financeira</strong> — clínica prescreve por protocolo, paciente compra com condição especial. A clínica recebe relatório de adesão, treinamento e suporte — não dinheiro.<br>
+  <strong>Vender para fisioterapeutas, esteticistas, clínicas de estética e lojas</strong> — não estão sob o CEM, podem revender com margem livremente.</p>
+</div>
+
+<h3>ANVISA</h3>
+<p>Se a peça for comunicada com finalidade clínica ("pós-cirúrgica", "reduz edema", "suporte pós-operatório"), ela deixa de ser vestuário e vira <strong>dispositivo médico</strong> sob a RDC 751/2022. Pelas Regras 1 e 4 do anexo, uma peça não invasiva que atua por compressão se enquadra em <strong>Classe I → regime de notificação</strong> (não registro): isenta de revalidação, deferimento em até 30 dias. Rótulo precisa trazer fabricante, detentor, lote, validade, responsável técnico e o nº da notificação precedido da sigla ANVISA.</p>
+<p><strong>Primeira pergunta a fazer ao cliente:</strong> a ContourSlim já tem notificação ANVISA das linhas pós-cirúrgicas? Se não tiver, isso precisa correr em paralelo — anunciar produto para saúde não regularizado é infração sanitária, e a Res. 2.386/2024 veda expressamente benefício ligado a produto sem registro.</p>
+<p class="foot">Observação honesta: não existe parecer do CFM ou da ANVISA que nomeie "cinta compressiva" especificamente. Tudo acima é aplicação analógica de normas que tratam de medicamentos, órteses e dispositivos. A leitura restritiva é a segura. Se o modelo comercial depender de um ponto cinzento, o caminho barato é consulta formal à Codame do CRM.</p>
+
+<h2>3 · Por que não copiar o Mar Negro</h2>
+<div class="h2sub">O mapa é prova social, não mecanismo de conversão</div>
+
+<p>O padrão "mapa → escolha seu representante → WhatsApp" pressupõe três coisas que não valem aqui:</p>
+<table>
+  <tr><th>Pressuposto do modelo</th><th>Situação ContourSlim</th></tr>
+  <tr><td>Existe rede de representantes instalada por estado</td><td>A confirmar. Se não existir, o mapa é uma promessa vazia.</td></tr>
+  <tr><td>O visitante já quer comprar no atacado e só precisa saber com quem falar</td><td>Tráfego frio de lookalike. O médico não sabe que a marca vende B2B, nem por que deveria.</td></tr>
+  <tr><td>A oferta é margem de revenda</td><td>Vedado ao médico. A oferta tem que ser outra.</td></tr>
+</table>
+
+<div class="verdict">
+  <p><strong>O problema técnico:</strong> o mapa coloca uma decisão antes da captura. Quem não acha o próprio estado, ou não quer abrir WhatsApp naquele instante, sai sem deixar rastro — e você pagou por esse clique. Em tráfego pago de topo, cada elemento interativo antes do formulário derruba conversão.</p>
+  <p><strong>A inversão que recomendo:</strong> capture primeiro, roteie depois. O lead preenche um formulário curto com um campo de <em>UF</em>; ao enviar, o sistema abre o WhatsApp <em>já do representante daquele estado</em>, com mensagem pré-preenchida. O lead entrega o mesmo benefício — falar com o consultor local — mas você fica com o contato no CRM mesmo se ele não abrir a conversa.</p>
+  <p><strong>O mapa continua existindo</strong>, como bloco de credibilidade abaixo da dobra: "atendimento em 14 estados". Prova social, não porta de entrada.</p>
+</div>
+
+<h2>4 · A página</h2>
+<div class="h2sub">Arquitetura recomendada, seção a seção</div>
+
+<p>Uma LP única, mobile-first, sem menu de navegação (nada de rota de fuga), com o mesmo formulário repetido em três alturas. Objetivo único: <strong>lead qualificado de clínica</strong>.</p>
+
+<div class="wire">
+  <div class="row"><div class="n">1</div><div class="c">
+    <div class="t">Dobra — a promessa, em linguagem de protocolo</div>
+    <div class="d">Headline no problema do cirurgião, não no produto. Algo como: <em>"Seu paciente sai do centro cirúrgico com a compressão certa — não com a cinta que ele achou no shopping."</em> Sub: linha de kits por procedimento, entrega para todo o Brasil, condição para clínicas. CTA único: <em>Falar com o consultor da minha região</em>. Sem menu, sem carrossel.</div>
+  </div></div>
+  <div class="row"><div class="n">2</div><div class="c">
+    <div class="t">A dor, nomeada em 3 linhas</div>
+    <div class="d">Compressão errada compromete o resultado da cirurgia; paciente compra tamanho errado; clínica fica sem controle da fase mais visível da recuperação — e a insatisfação volta pro cirurgião. Esta seção é o que faz o médico entender por que está lendo.</div>
+  </div></div>
+  <div class="row"><div class="n">3</div><div class="c">
+    <div class="t">Os três modelos de parceria <span class="pill">núcleo da oferta</span></div>
+    <div class="d">Três cards, nesta ordem: <em>(a) Kit institucional</em> — a clínica compra e embute no pacote cirúrgico; <em>(b) Linha personalizada</em> — peças com a marca da clínica; <em>(c) Protocolo indicado</em> — a clínica prescreve, o paciente compra com condição especial e a clínica recebe relatório de adesão. Nenhuma palavra sobre margem, comissão ou lucro do médico. Este é o texto que precisa passar por revisão jurídica antes de ir ao ar.</div>
+  </div></div>
+  <div class="row"><div class="n">4</div><div class="c">
+    <div class="t">Kits por procedimento</div>
+    <div class="d">Lipoaspiração, abdominoplastia, mamoplastia, lipo + enxerto glúteo, mastectomia, lipedema. Foto do kit, o que vem dentro, faixa de compressão, tempo de uso recomendado. Sem preço na página — preço é o motivo do contato.</div>
+  </div></div>
+  <div class="row"><div class="n">5</div><div class="c">
+    <div class="t">Prova técnica</div>
+    <div class="d">Notificação ANVISA (assim que houver), fabricação própria, tabela de compressão, grade de tamanhos, política de troca. O médico compra segurança técnica, não estética de campanha. Aqui entram também os números da marca: anos de operação, lojas físicas, volume atendido.</div>
+  </div></div>
+  <div class="row"><div class="n">6</div><div class="c">
+    <div class="t">Formulário <span class="pill">a peça mais importante</span></div>
+    <div class="d">7 campos: nome · WhatsApp · e-mail · UF · CRM ou CNPJ · tipo de estabelecimento (dropdown) · <em>cirurgias por mês</em> (dropdown: até 5 / 6–15 / 16–40 / 40+). O último campo é o que qualifica e prioriza a fila comercial. Ao enviar: redireciona para WhatsApp do rep da UF com mensagem pronta, e grava o lead no CRM.</div>
+  </div></div>
+  <div class="row"><div class="n">7</div><div class="c">
+    <div class="t">Cobertura nacional</div>
+    <div class="d">O mapa, aqui. Estados atendidos, prazo médio de entrega por região. Credibilidade — não mecanismo.</div>
+  </div></div>
+  <div class="row"><div class="n">8</div><div class="c">
+    <div class="t">FAQ comercial + CTA final</div>
+    <div class="d">Pedido mínimo, prazo, frete, troca de tamanho, prazo de personalização, formas de pagamento e faturamento (PJ, boleto, prazo). São as objeções reais que travam a primeira compra.</div>
+  </div></div>
+</div>
+
+<h4>Duas decisões de estrutura</h4>
+<p><strong>Preço fechado atrás de cadastro?</strong> Na fase 1, não. O melhor benchmark brasileiro disso é a Adcos Pro (cadastro → upload de registro de classe → validação em 72h úteis → login libera preço, "até 40% de desconto para profissionais"). É excelente, mas é fase 2 — exige backend, validação e catálogo. Na fase 1, o preço é o gancho da conversa comercial.</p>
+<p><strong>Domínio.</strong> Subdomínio (<code>profissional.contourslim.com.br</code> ou <code>med.</code>) aproveita autoridade do domínio e separa o público. Evita que o médico caia no e-commerce B2C e veja preço de varejo.</p>
+
+<h2>5 · Tráfego</h2>
+<div class="h2sub">O que fazer com os 8 mil leads — e o que não fazer</div>
+
+<div class="flag bad">
+  <span class="lab">Risco alto</span>
+  <p><strong>Subir a lista de 8k direto como público personalizado no Meta.</strong> Os Termos de Públicos Personalizados exigem que você declare ter dado aviso adequado e obtido o consentimento necessário dos titulares. Se a lista foi comprada ou raspada, essa declaração é falsa — e a penalidade não é multa da ANPD, é <strong>bloqueio da conta de anúncios</strong>. Do lado LGPD: dado de médico é dado pessoal (pessoa natural), e a finalidade de um cadastro público de CRM é permitir ao paciente verificar habilitação, não alimentar campanha. Disparo frio em massa no WhatsApp também viola a política da plataforma e queima o número.</p>
+</div>
+
+<p><strong>Boa notícia:</strong> dado profissional de médico <em>não</em> é dado sensível (dado de saúde é o do próprio titular), então o legítimo interesse continua disponível como base legal — o que abre o caminho abaixo.</p>
+
+<ol class="steps">
+  <li><b>Aquecer a lista antes de anunciar para ela</b>
+  E-mail 1-a-1 identificado: quem é a ContourSlim, de onde veio o contato, por que está falando com ele, opt-out de um clique. Objetivo não é vender — é converter lista fria em base com opt-in.</li>
+  <li><b>Semente limpa para o lookalike</b>
+  Seed audience = quem converteu na LP + engajamento IG/FB dos últimos 365 dias + base de clientes com opt-in. Nunca a lista crua. Lookalike é permitido no Meta para saúde (as categorias especiais restritas são crédito, emprego, moradia e política) — desde que a semente seja legítima.</li>
+  <li><b>Google Search de fundo de funil, em paralelo</b>
+  "cinta pós cirúrgica atacado", "kit pós operatório para clínica", "malha compressiva CNPJ", "fornecedor cinta pós cirúrgica". Volume baixo, intenção altíssima, quase sem disputa. Costuma ser o CPL mais barato do projeto. <span class="pill g">achado relevante</span> Em maio/2025 o Google excluiu da categoria sensível "Saúde" o conteúdo "direcionado a profissionais de saúde no exercício da profissão" — o que destrava customer match e públicos semelhantes para campanha B2B. O changelog não especifica escopo geográfico, então vale confirmar com o suporte antes de apostar nisso.</li>
+  <li><b>Criativo que não é reprovado</b>
+  Nada de antes/depois lado a lado, close de abdômen, ou copy em 2ª pessoa do tipo "fez lipo?" — é exatamente o padrão que a Meta reprova (política de atributos pessoais) e que a Res. CFM 2.336/2023 restringe. Criativo B2B — centro cirúrgico, kit sobre a mesa, tabela de compressão, linguagem de protocolo — tem risco de reprovação muito menor e fala com o público certo.</li>
+</ol>
+
+<h2>6 · Faseamento</h2>
+<div class="h2sub">O que entra agora e o que espera o institucional</div>
+
+<table>
+  <tr><th>Fase</th><th>Entrega</th><th>Prazo</th></tr>
+  <tr><td><strong>0 — Fundação</strong></td><td>Definir os 3 modelos de parceria e a tabela B2B; verificar notificação ANVISA; mapear representantes por UF (ou definir atendimento centralizado); revisão jurídica do texto de oferta.</td><td class="num">3–5 dias</td></tr>
+  <tr><td><strong>1 — LP + tráfego</strong></td><td>LP em subdomínio, formulário com roteamento por UF, pixel + conversões offline, CRM básico, 2 campanhas (Meta lookalike + Google Search), 3–4 criativos.</td><td class="num">7–10 dias</td></tr>
+  <tr><td><strong>2 — Área do profissional</strong></td><td>Cadastro com validação de CRM/CNPJ, preço atrás de login, catálogo B2B, pedido mínimo, faturamento PJ. Modelo Adcos Pro.</td><td class="num">30–60 dias</td></tr>
+  <tr><td><strong>3 — Institucional</strong></td><td>Site de marca completo, conteúdo técnico, materiais de apoio para clínica, programa de personalização white-label.</td><td class="num">60–90 dias</td></tr>
+</table>
+
+<h3>Como medir a fase 1</h3>
+<p>Não vou chutar CPL para este nicho — não há benchmark público confiável de B2B médico em compressão. O que dá para fixar desde já é a <strong>matemática que define o teto do CAC</strong>: uma clínica que opera 10 cirurgias/mês e compra 1 kit por paciente gera receita recorrente mensal previsível; multiplicada por 12 meses de relação, é ela que autoriza pagar caro por lead. Preencher com o preço B2B real na fase 0 e usar como régua.</p>
+<p>Os quatro números a acompanhar desde o dia 1: <strong>custo por lead</strong>, <strong>% de leads com CNPJ/CRM válido</strong> (qualidade real, não volume), <strong>% que abre conversa no WhatsApp</strong> e <strong>% que faz a primeira compra em 30 dias</strong>. O segundo é o que revela se o lookalike está trazendo médico ou curioso.</p>
+
+<h2>7 · O que preciso saber do cliente</h2>
+<div class="h2sub">Sete perguntas que travam ou destravam o projeto</div>
+<ol>
+  <li><strong>Existe rede de representantes por estado hoje?</strong> Quantos, quais UFs, e eles são CLT, comissionados ou distribuidores independentes? Isso define se o roteamento por UF é real ou se o atendimento é centralizado.</li>
+  <li><strong>As linhas pós-cirúrgicas têm notificação ANVISA?</strong> Se não, começa agora em paralelo.</li>
+  <li><strong>Qual a origem dos 8 mil leads de médicos?</strong> Base própria de relacionamento, evento, ou lista comprada/raspada? Muda completamente o risco do passo 2 do tráfego.</li>
+  <li><strong>Existe tabela B2B definida?</strong> Preço, pedido mínimo, prazo de faturamento, política de troca de tamanho. Sem isso o comercial não fecha o lead que a LP entrega.</li>
+  <li><strong>A fábrica suporta personalização white-label?</strong> É o único diferencial B2B testado no mercado com apenas um ocupante — se der para fazer, é o principal ativo de posicionamento.</li>
+  <li><strong>Qual a plataforma do e-commerce atual?</strong> Define se a fase 2 reaproveita a estrutura com lista de preço B2B por login ou exige stack separada.</li>
+  <li><strong>Quem atende o lead?</strong> Um lead B2B de clínica que espera 6 horas por resposta esfria. Precisa de SLA definido antes de ligar a campanha.</li>
+</ol>
+
+<hr>
+
+<h2>Fontes</h2>
+<p class="src">
+<strong>Mercado:</strong>
+<a href="https://www.isaps.org/discover/about-isaps/global-statistics/global-survey-2024-full-report-and-press-releases/">ISAPS Global Survey 2024</a> ·
+<a href="https://www.cirurgiaplastica.org.br/en/brasil-lidera-cirurgias-plasticas-no-mundo-e-reforca-papel-da-sbcp/">SBCP</a> ·
+<a href="https://lipedema.org.br/prevalencia-do-lipedema-no-brasil-os-dados-oficiais/">Prevalência de lipedema (J Vasc Bras)</a> ·
+<a href="https://amb.org.br/demografia/">AMB — Demografia Médica</a> ·
+<a href="https://oportunidados.com.br/cnae/9602502-atividades-de-estetica-e-outros-servicos-de-cuidados-com-a-beleza">CNAE 9602-5/02 (Receita Federal)</a><br>
+<strong>Concorrência e benchmarks:</strong>
+<a href="https://www.cintasenova.com.br/parcerias/">Cinta-se Nova — Parcerias</a> ·
+<a href="https://www.pliemed.com.br/pages/seja-um-revendedor">Plié MED — Revendedor</a> ·
+<a href="https://newform.com.br/">New Form</a> ·
+<a href="https://www.macomcintas.com.br/">Macom</a> ·
+<a href="https://www.adcosprofissional.com.br/cadastro">Adcos Pro — cadastro</a> ·
+<a href="https://lp.vctecestetica.com.br/cadastre-se/">VCTec Estética</a> ·
+<a href="https://sermulher.com/revendedores/seja-um-revendedor/">Ser Mulher</a><br>
+<strong>Regulatório:</strong>
+<a href="https://portal.cfm.org.br/images/PDF/cem2019.pdf">Código de Ética Médica (Res. CFM 2.217/2018)</a> ·
+<a href="https://sistemas.cfm.org.br/normas/arquivos/resolucoes/BR/2023/2336_2023.pdf">Res. CFM 2.336/2023 (publicidade médica)</a> ·
+<a href="https://portal.cfm.org.br/noticias/cfm-publica-novas-regras-para-trazer-maior-transparencia-na-relacao-entre-medicos-e-industrias-da-area-da-saude/">Res. CFM 2.386/2024 (transparência)</a> ·
+<a href="https://sistemas.cfm.org.br/normas/arquivos/pareceres/MS/2022/22_2022.pdf">Parecer CRM-MS 22/2022</a> ·
+<a href="https://sistemas.cfm.org.br/normas/arquivos/pareceres/MS/2018/30_2018.pdf">Parecer CRM-MS 30/2018</a> ·
+<a href="https://www.gov.br/anvisa/pt-br/setorregulado/regularizacao/produtos-para-saude/notificacao/notificacao-de-produtos-para-saude">ANVISA — notificação de produtos para saúde</a> ·
+<a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm">LGPD</a> ·
+<a href="https://www.gov.br/anpd/pt-br/centrais-de-conteudo/materiais-educativos-e-publicacoes/guia_legitimo_interesse.pdf">ANPD — Guia do Legítimo Interesse</a><br>
+<strong>Plataformas:</strong>
+<a href="https://transparency.meta.com/policies/ad-standards/restricted-goods-services/health-wellness/">Meta — Saúde e bem-estar</a> ·
+<a href="https://www.facebook.com/legal/terms/customaudience">Meta — Termos de Públicos Personalizados</a> ·
+<a href="https://support.google.com/adspolicy/answer/16258024?hl=pt-BR">Google — atualização de publicidade personalizada (mai/2025)</a> ·
+<a href="https://support.google.com/adspolicy/answer/143465?hl=pt-BR">Google — publicidade personalizada</a>
+</p>
+
+<p class="foot">Este documento reúne pesquisa pública e interpretação de normas. Não substitui parecer jurídico. Os pontos marcados como zona cinzenta (aplicação do CEM a cintas compressivas, classe de risco ANVISA, escopo geográfico da mudança do Google) devem ser confirmados formalmente antes de escalar investimento.</p>
+
+</div>
+</body>
+</html>
