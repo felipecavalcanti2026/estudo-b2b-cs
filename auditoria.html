@@ -112,7 +112,20 @@
     .tw table{min-width:520px}
     .stats{grid-template-columns:1fr 1fr}
   }
-  @media print{ body{background:#fff} .wrap{max-width:100%} figure{break-inside:avoid} table{break-inside:avoid} }
+  @media print{
+    body{background:#fff;font-size:11.2pt}
+    .wrap{max-width:100%;padding:0}
+    figure,table,.tw,.verdict,.flag,.ev,.stats,.q,figcaption{break-inside:avoid}
+    .wire .row{break-inside:avoid}
+    h1,h2,h3,.h2sub{break-after:avoid;break-inside:avoid}
+    h2{margin-top:34px}
+    header.top{padding-top:0}
+    figure img{max-width:230px}
+    .ev{background:#f4f2f7;color:var(--ink);border:1px solid var(--line)}
+    .ev pre{color:var(--ink)}
+    .ev .evh{color:var(--accent)}
+    a{text-decoration:none}
+  }
 </style>
 </head>
 <body>
@@ -215,9 +228,17 @@ chegou no checkout? true</pre>
   <figcaption>Carrinho lateral, iPhone. O balão do chat cobre o subtotal; a caixa "I agree with the terms and conditions" fica espremida entre o aviso de frete e o botão. Ao fundo, dois pop-ups da página de produto ainda abertos.</figcaption>
 </figure>
 
+<h3>Por que isso é mais caro do que parece</h3>
+
+<p>Este é o visitante mais caro de todo o funil. Ele viu o anúncio, clicou, navegou, escolheu cor, escolheu tamanho e colocou o produto no carrinho — a marca já pagou pelo clique, já pagou pelo tempo dele e já venceu todas as objeções anteriores. O único passo que faltava era o pagamento. É exatamente nesse ponto que a loja o segura.</p>
+
+<p>E ele não reclama. Esse é o agravante silencioso: quem esbarra numa trava dessas não abre um chamado, não manda e-mail, não escreve avaliação. Ele fecha a aba e vai para o concorrente. A reclamação que chegou até a marca representa a minoria que se deu ao trabalho de avisar — o restante do prejuízo é invisível e não aparece em lugar nenhum, exceto na diferença entre o que a mídia gasta e o que a loja fatura.</p>
+
+<p>Pior: essa trava não é um defeito. É uma configuração que alguém ligou de propósito, acreditando que protegia a loja. Não protege — a aceitação dos termos já está amarrada à finalização do pedido no próprio checkout do Shopify. A marca está pagando um pedágio de conversão por uma segurança jurídica que ela já tinha de graça.</p>
+
 <div class="flag bad">
-  <span class="lab">Correção</span>
-  <p>Desligar o campo de termos no carrinho (é uma opção do tema, não exige desenvolvedor) e reposicionar o widget de chat para não cobrir o rodapé do carrinho. Tempo estimado: 20 minutos. É a correção de melhor relação esforço/retorno da lista inteira.</p>
+  <span class="lab">O que precisa acontecer</span>
+  <p>Desligar o campo de termos no carrinho e tirar o chat de cima do rodapé. É configuração de tema, não desenvolvimento.</p>
 </div>
 
 <h2>Bloco B · A decisão impossível</h2>
@@ -255,9 +276,19 @@ chegou no checkout? true</pre>
 
 <p>O cliente escolhe a cor que gostou, escolhe o tamanho e recebe "Sold Out". Duas ou três vezes seguidas, ele conclui que a loja não tem produto — e essa conclusão está parcialmente certa.</p>
 
+<h3>O efeito composto dos três</h3>
+
+<p>Isolados, os três problemas parecem administráveis. Juntos, eles formam um funil que se estreita sozinho.</p>
+
+<p>O visitante entra procurando uma peça pós-cirúrgica — ou seja, ele tem <strong>data marcada</strong>. Quem compra malha compressiva não está passeando: acabou de sair de uma cirurgia ou vai operar na semana que vem. É a compra mais urgente e mais insegura do varejo de vestuário, porque a peça errada não é só um desconforto, é um risco no pós-operatório. Esse cliente chega com pressa e com medo.</p>
+
+<p>O site responde a essa pressa com: <em>não digo o seu tamanho</em>, <em>a cor que você quis não tem</em>, <em>o tamanho que você quis não tem</em> e <em>se errar, não devolvo</em>. Cada "não" desses funciona como um filtro. Quem sobrevive aos quatro é uma fração pequena do tráfego pago — e é sobre essa fração que a loja está construindo o faturamento hoje.</p>
+
+<p>Há ainda um custo que não aparece no site: cada cliente inseguro que <em>mesmo assim</em> compra tende a virar uma mensagem no suporte antes ou depois do pedido, perguntando o tamanho. A ausência da tabela de medidas não some — ela migra para o WhatsApp e para o e-mail da equipe, transformando venda automatizada em atendimento manual.</p>
+
 <div class="flag bad">
-  <span class="lab">Correção</span>
-  <p>(a) Publicar tabela de medidas por tamanho e abri-la como modal no botão da página de produto. (b) Reescrever a política de devolução: peça não usada, com lacre e etiqueta intactos, 14 dias — que é o padrão do mercado americano e o que a própria política já concede em outro parágrafo. (c) Repor XS e XL ou ocultar do seletor as variantes esgotadas.</p>
+  <span class="lab">O que precisa acontecer</span>
+  <p>Tabela de medidas publicada, política de devolução reescrita para o padrão do mercado americano e reposição de XS e XL. Nenhum dos três exige desenvolvimento — exige decisão da marca.</p>
 </div>
 
 <h2>Bloco C · As promessas que a loja não cumpre</h2>
@@ -274,7 +305,11 @@ desconto:        US$   0,00
 descontos automáticos aplicados: nenhum</pre>
 </div>
 
-<p>O desconto simplesmente não existe. E o checkout tem o campo de cupom ativo — então o cliente vê a promessa, não vê o desconto, vê a caixa de código e <strong>sai do checkout para procurar um cupom que ninguém criou</strong>. Boa parte de quem sai nessa hora não volta. É o pior tipo de vazamento: acontece depois de todo o custo de mídia já ter sido pago.</p>
+<p>O desconto simplesmente não existe. E o checkout tem o campo de cupom ativo — então o cliente vê a promessa, não vê o desconto, vê a caixa de código e <strong>sai do checkout para procurar um cupom que ninguém criou</strong>.</p>
+
+<p>Repare no tamanho do estrago. O banner faz o trabalho que deveria fazer: convence alguém a levar duas peças em vez de uma, dobrando o ticket. Esse cliente chega ao carrinho com US$ 267,98 e a expectativa de pagar US$ 214,38. Ao ver o valor cheio, ele conclui uma de duas coisas — que existe um cupom escondido, ou que a loja não cumpre o que anuncia. No primeiro caso ele sai para caçar o código e a sessão morre numa aba do Google. No segundo, a marca perde algo mais caro que a venda: a credibilidade do próximo anúncio que esse cliente vier a ver.</p>
+
+<p>É o pior tipo de vazamento que existe, porque acontece <strong>depois</strong> de todo o custo de mídia ter sido pago, com o cliente de maior ticket da loja, e por causa de um banner que a própria marca colocou no ar.</p>
 
 <h3>2. O frete grátis prometido não existe</h3>
 <p>A política de envio afirma: <em>"Our 'Free Shipping' option, with a fixed cost of $0.00"</em>. Consultei as tarifas reais em quatro estados. Não há opção gratuita — há seis opções pagas da FedEx:</p>
@@ -317,7 +352,11 @@ descontos automáticos aplicados: nenhum</pre>
   <tr><td>Alfândega</td><td>—</td><td>cliente paga taxa de importação</td><td class="x">não se aplica</td></tr>
 </table></div>
 
-<p>Três desses itens são heranças de um FAQ traduzido de operação brasileira e nunca revisado: boleto, segunda via de boleto e alfândega não existem na experiência de um comprador americano. Mas o mais grave é a linha da origem: uma marca chamada <strong>Brazilian</strong> Contour informa, no próprio FAQ, que seus fornecedores são da China, da Holanda e do Reino Unido. Isso desmonta o único diferencial que o nome da marca carrega.</p>
+<p>Três desses itens são heranças de um FAQ traduzido de operação brasileira e nunca revisado: boleto, segunda via de boleto e alfândega não existem na experiência de um comprador americano. Um cliente nos Estados Unidos que lê "bank slip" e "segunda via do boleto" não entende do que se trata — mas entende que aquele texto não foi escrito para ele.</p>
+
+<p>Mais grave é a linha da origem. Uma marca chamada <strong>Brazilian</strong> Contour informa, no próprio FAQ, que seus fornecedores são da China, da Holanda e do Reino Unido. O nome da marca é a promessa; o FAQ é o desmentido. E não é um detalhe escondido: é a pergunta 8, numa página linkada no menu principal e no rodapé do checkout.</p>
+
+<p>O efeito conjunto dessas seis linhas é pior que a soma delas. O cliente que abre as políticas é justamente o cliente inseguro — aquele que ainda não decidiu e foi procurar motivo para confiar. Ele encontra prazo de 45 dias, taxa de alfândega, produto importado, boleto brasileiro e fornecedor chinês. A página que existia para dar segurança é a página que produz a desistência.</p>
 
 <h2>Bloco E · A loja parece inacabada</h2>
 <div class="h2sub">Sinais de abandono visíveis para quem chega pelo anúncio</div>
@@ -338,6 +377,10 @@ descontos automáticos aplicados: nenhum</pre>
   <li><strong>Páginas em português indexadas</strong> no site americano: <code>/pages/nossas-lojas</code>, <code>/pages/rastreie-o-seu-pedido</code>, <code>/pages/contato</code>.</li>
   <li><strong>Três pop-ups simultâneos</strong> na página de produto: "Compare with similar waist shapers", "Explore this product" e o balão de chat, todos abertos ao mesmo tempo sobre o botão de compra.</li>
 </ul>
+
+<p>Cada item acima é pequeno. O conjunto não é. O visitante não faz auditoria — ele forma uma impressão em poucos segundos e decide se aquele site merece o número do cartão dele. Uma mochila de US$ 29 na loja de compressão, um menu que leva a coleções vazias, o nome da marca escrito errado na aba do navegador e três balões cobrindo o botão de compra somam uma única mensagem: <em>ninguém está tomando conta desta loja</em>.</p>
+
+<p>Para uma marca que vende peça médica pós-cirúrgica, essa é a pior mensagem possível. O produto exige confiança clínica; a vitrine comunica descuido. E o tráfego pago torna isso mais caro, não menos: quanto mais dinheiro entra em mídia, mais pessoas chegam para ver a loja nesse estado.</p>
 
 <h2>Bloco F · Entulho técnico da operação antiga</h2>
 <div class="h2sub">Código brasileiro ainda rodando na loja americana</div>
@@ -372,44 +415,34 @@ descontos automáticos aplicados: nenhum</pre>
 
 <hr>
 
-<h2>Plano de correção</h2>
-<div class="h2sub">Ordenado por relação entre esforço e retorno</div>
+<h2>O que precisa ser feito</h2>
+<div class="h2sub">Três frentes, nesta ordem</div>
 
-<h3>Bloco 1 — 48 horas · sem custo, sem desenvolvedor</h3>
-<ol class="steps">
-  <li><b>Desligar a caixa obrigatória de termos no carrinho</b>É uma opção do tema. Remove a trava descrita no Bloco A.</li>
-  <li><b>Reposicionar o widget de chat</b>Para que pare de cobrir o subtotal e o rodapé do carrinho.</li>
-  <li><b>Resolver o banner de 20% OFF</b>Duas saídas possíveis: criar o desconto automático de verdade no Shopify, ou retirar o banner. Manter a promessa sem o desconto é a pior das três opções.</li>
-  <li><b>Esvaziar o menu das 11 coleções sem produto</b>Elimina os becos sem saída e faz sumir os 48 "Example product" da home.</li>
-  <li><b>Corrigir o título do site e o link 404 da marca</b>"Brazilian Countour" → "Brazilian Contour"; padronizar o fabricante em um único nome.</li>
-</ol>
+<p>A ordem importa mais que a lista. Corrigir a comunicação antes de destravar o carrinho é levar mais gente até uma porta que continua emperrada; destravar o carrinho sem resolver a questão do tamanho é entregar ao cliente uma decisão que ele continua sem conseguir tomar.</p>
 
-<h3>Bloco 2 — 7 dias · exige redação e curadoria</h3>
-<ol class="steps">
-  <li><b>Publicar a tabela de medidas</b>Busto, cintura e quadril em centímetros e polegadas, por tamanho, com instrução de como medir. Abrir como modal na página de produto. É a correção de maior impacto sobre a taxa de conversão.</li>
-  <li><b>Reescrever a política de devolução</b>Peça não usada, com lacre e etiqueta intactos, 14 dias. Anunciar isso na página de produto, não só no rodapé.</li>
-  <li><b>Unificar prazo e frete em uma única versão</b>FAQ e política de envio dizendo a mesma coisa: entrega doméstica FedEx, 1 a 7 dias úteis. Remover boleto, segunda via, alfândega e a menção a fornecedores estrangeiros.</li>
-  <li><b>Definir frete grátis acima de um ticket</b>Sugestão: US$ 99 — abaixo do preço da maioria das peças, o que torna o frete grátis a regra e não a exceção. Reduzir as seis modalidades FedEx para duas (padrão e expressa) e anunciar o prazo na página de produto.</li>
-  <li><b>Repor ou ocultar as variantes esgotadas</b>Prioridade em XS e XL, que sumiram de todas as cores.</li>
-</ol>
+<div class="wire">
+  <div class="row"><div class="n">1</div><div class="c">
+    <div class="t">Destravar — dias</div>
+    <div class="d">Remover a trava do carrinho, resolver o banner de 20% e limpar os sinais de loja inacabada. <em>Configuração e curadoria, sem desenvolvimento.</em> Atinge quem já decidiu comprar e não conseguiu.</div>
+  </div></div>
+  <div class="row"><div class="n">2</div><div class="c">
+    <div class="t">Convencer — semanas</div>
+    <div class="d">Tabela de medidas, política de devolução compatível com o mercado americano, prazo e frete ditos em uma única versão, reposição das variantes esgotadas. <em>Exige decisão da marca sobre devolução, desconto e piso de frete grátis.</em> Atinge quem chegou e não se sentiu seguro para decidir.</div>
+  </div></div>
+  <div class="row"><div class="n">3</div><div class="c">
+    <div class="t">Sustentar — meses</div>
+    <div class="d">Remoção do entulho técnico da operação antiga, curadoria do catálogo, peso das imagens, prova social na página de produto e medição do funil ligada. <em>É o que impede o problema de voltar e o que torna cada correção verificável em número.</em></div>
+  </div></div>
+</div>
 
-<h3>Bloco 3 — 30 dias · estrutural</h3>
-<ol class="steps">
-  <li><b>Remover as quatro integrações brasileiras do tema</b>Yampi, Parcelamento, easyGDPR e Mercado Pago. Elimina o risco latente do botão de compra.</li>
-  <li><b>Preencher ou desativar as coleções vazias</b>Decidir o que a loja realmente vende: hoje o menu promete nove linhas e o catálogo entrega dez produtos.</li>
-  <li><b>Converter as imagens do topo para WebP</b>De 2,3&nbsp;MB para menos de 250&nbsp;KB.</li>
-  <li><b>Confirmar o GA4 no checkout e ligar o funil</b>Para medir o efeito de tudo o que foi corrigido acima.</li>
-  <li><b>Adicionar prova social na página de produto</b>Avaliações e fotos de clientes. Hoje não há nenhuma — num produto de US$ 134 comprado por quem acabou de sair de uma cirurgia, isso pesa.</li>
-</ol>
-
-<hr>
+<p>O detalhamento de cada frente — o que se mexe, em que ordem, quem executa e em quanto tempo — é o próximo documento, e depende das definições abaixo.</p>
 
 <h2>A decisão</h2>
 <div class="h2sub">O que precisa ser definido para começar</div>
 
 <div class="verdict">
-  <p>Nada neste documento exige refazer a loja. São correções de configuração, de texto e de curadoria de catálogo — a maior parte delas cabe em uma tarde de trabalho dentro do painel do Shopify.</p>
-  <p>A sequência importa: o <strong>Bloco 1 destrava</strong> quem já está decidido a comprar; o <strong>Bloco 2 convence</strong> quem ainda não está. Fazer o 2 antes do 1 é levar mais gente até uma porta que continua emperrada.</p>
+  <p>Nada neste documento exige refazer a loja. Nenhum dos gargalos listados é um defeito de plataforma, de tema ou de infraestrutura — são configurações ligadas, textos nunca revisados e catálogo sem curadoria. Essa é a boa e a má notícia ao mesmo tempo: é barato de resolver, e por isso mesmo cada dia que passa sem resolver é caro.</p>
+  <p>Enquanto isso não é feito, a mídia continua rodando. Todo o investimento em anúncio de hoje está sendo despejado num funil que trava no último passo, esconde a informação que decide a compra e promete um desconto que não entrega. Não é o tráfego que está caro — é o site que está devolvendo o tráfego.</p>
   <p>Três definições dependem exclusivamente da marca e travam a execução: <strong>(a)</strong> o desconto de 20% vai existir ou o banner sai? <strong>(b)</strong> qual é a política de devolução real que a operação consegue sustentar? <strong>(c)</strong> qual é o piso de frete grátis que a margem aceita? Com essas três respostas, os Blocos 1 e 2 saem inteiros na mesma semana.</p>
 </div>
 
