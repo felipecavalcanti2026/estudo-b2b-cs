@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Brazilian Contour — Plano de marketing e projeção de 12 meses</title>
+<style>
+  :root{
+    --ink:#1b1a1f; --ink-2:#4a4753; --ink-3:#7b7787;
+    --line:#e5e1ea; --line-2:#f2eff6;
+    --bg:#fbfafc; --card:#ffffff;
+    --accent:#7d3c6a; --accent-soft:#f7edf4;
+    --ok:#2f6f52; --ok-soft:#e9f4ee;
+    --warn:#8a5a12; --warn-soft:#fdf3e2;
+    --bad:#9b2f31; --bad-soft:#fdecec;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 24px 96px}
+  header.top{padding:64px 0 40px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:650}
+  h1{font-size:38px;line-height:1.15;margin:14px 0 12px;letter-spacing:-.02em;font-weight:700}
+  .sub{color:var(--ink-2);font-size:17px;max-width:62ch;margin:0}
+  .meta{margin-top:22px;font-size:13px;color:var(--ink-3)}
+  h2{font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);
+     margin:56px 0 6px;font-weight:700;padding-top:8px}
+  h2 + .h2sub{font-size:26px;line-height:1.25;letter-spacing:-.015em;margin:0 0 20px;font-weight:680}
+  h3{font-size:18px;margin:32px 0 8px;letter-spacing:-.01em;font-weight:660}
+  h4{font-size:15px;margin:22px 0 6px;font-weight:660;color:var(--ink)}
+  p{margin:0 0 14px}
+  ul,ol{margin:0 0 16px;padding-left:22px}
+  li{margin:0 0 7px}
+  strong{font-weight:640}
+  a{color:var(--accent)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:18px 0}
+  .card.tight{padding:18px 20px}
+  .verdict{background:var(--accent-soft);border:1px solid #e7d3e0;border-radius:14px;padding:22px 24px;margin:22px 0}
+  .verdict p:last-child{margin-bottom:0}
+  .flag{border-radius:12px;padding:16px 18px;margin:16px 0;font-size:15px;border:1px solid}
+  .flag p:last-child{margin-bottom:0}
+  .flag.bad{background:var(--bad-soft);border-color:#f3d3d3}
+  .flag.warn{background:var(--warn-soft);border-color:#f0e0c2}
+  .flag.ok{background:var(--ok-soft);border-color:#cfe6d9}
+  .flag .lab{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+  .flag.bad .lab{color:var(--bad)} .flag.warn .lab{color:var(--warn)} .flag.ok .lab{color:var(--ok)}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:22px 0}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .stat .n{font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:1.1;color:var(--accent)}
+  .stat .l{font-size:12.5px;color:var(--ink-2);margin-top:6px;line-height:1.4}
+  table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14.5px}
+  th{text-align:left;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);
+     font-weight:700;padding:0 12px 8px 0;border-bottom:1px solid var(--line)}
+  td{padding:11px 12px 11px 0;border-bottom:1px solid var(--line-2);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  .num{font-variant-numeric:tabular-nums;white-space:nowrap}
+  .steps{counter-reset:s;list-style:none;padding:0;margin:20px 0}
+  .steps li{counter-increment:s;position:relative;padding-left:44px;margin-bottom:18px}
+  .steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:28px;height:28px;
+    border-radius:50%;background:var(--accent);color:#fff;font-size:13px;font-weight:700;
+    display:flex;align-items:center;justify-content:center}
+  .steps b{display:block;font-weight:660;margin-bottom:2px}
+  .wire{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:20px 0}
+  .wire .row{display:grid;grid-template-columns:38px 1fr;border-bottom:1px solid var(--line-2)}
+  .wire .row:last-child{border-bottom:none}
+  .wire .n{background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:13px;
+    display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line-2)}
+  .wire .c{padding:14px 18px}
+  .wire .t{font-weight:660;font-size:15px;margin-bottom:3px}
+  .wire .d{font-size:14px;color:var(--ink-2);line-height:1.55}
+  .wire .d em{color:var(--accent);font-style:normal;font-weight:600}
+  .pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    padding:3px 9px;border-radius:99px;background:var(--accent-soft);color:var(--accent);margin-left:8px;vertical-align:2px}
+  .pill.g{background:var(--ok-soft);color:var(--ok)}
+  .pill.r{background:var(--bad-soft);color:var(--bad)}
+  .q{border-left:3px solid var(--accent);padding:2px 0 2px 18px;margin:20px 0;color:var(--ink-2);font-size:16.5px}
+  .src{font-size:13px;color:var(--ink-3);line-height:1.7}
+  .src a{color:var(--ink-3)}
+  hr{border:none;border-top:1px solid var(--line);margin:52px 0}
+  .foot{font-size:13px;color:var(--ink-3);margin-top:12px}
+  @media(max-width:640px){
+    h1{font-size:29px} h2+.h2sub{font-size:21px} .wrap{padding:0 18px 64px}
+    table{font-size:13.5px}
+  }
+
+  .tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:18px 0}
+  .tw table{margin:0;min-width:100%}
+  .sm{font-size:12.5px;color:var(--ink-3);font-weight:500}
+  th.num,td.num{text-align:left}
+  td.x{color:var(--bad);font-weight:700}
+  td.v{color:var(--ok);font-weight:700}
+  ol.steps{counter-reset:s;list-style:none;padding:0;margin:20px 0}
+  ol.steps li{counter-increment:s;position:relative;padding-left:44px;margin-bottom:18px}
+  ol.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .chart{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:22px 0}
+  .cbar{display:flex;align-items:center;gap:14px;margin-bottom:18px;font-size:13px}
+  .cbar .lab{width:46px;color:var(--ink-3);font-weight:650;flex:none;font-variant-numeric:tabular-nums}
+  .cbar .track{flex:1 1 auto;min-width:0}
+  .cbar .track i{display:block;height:13px;border-radius:3px;margin-bottom:5px}
+  .cbar .track i:last-child{margin-bottom:0}
+  .cbar .track i.inv{background:#d9cfe2}
+  .cbar .track i.fat{background:var(--accent)}
+  .cbar .val{flex:none;color:var(--ink);font-weight:680;white-space:nowrap;font-variant-numeric:tabular-nums;width:94px;text-align:right}
+  .clegend{display:flex;gap:22px;font-size:12px;color:var(--ink-3);margin-top:18px;padding-top:14px;border-top:1px solid var(--line-2)}
+  .clegend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+  .clegend .i-inv{background:#d9cfe2} .clegend .i-fat{background:var(--accent)}
+  .closing{color:var(--ink-2);font-size:15px;border-left:3px solid var(--accent);padding:2px 0 2px 18px;margin:22px 0}
+  .verdict.inv{text-align:center;padding:26px 24px}
+  .verdict .invl{font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 8px}
+  .verdict .invv{font-size:32px;font-weight:700;letter-spacing:-.02em;margin:0 0 8px;color:var(--ink)}
+  .verdict .sm2{font-size:13px;color:var(--ink-3);margin:0}
+  @media(max-width:640px){ .tw table{min-width:520px} .stats{grid-template-columns:1fr 1fr} .cbar .val{width:78px;font-size:12px} }
+  @media print{
+    body{background:#fff;font-size:11.4pt}
+    .wrap{max-width:100%;padding:0}
+    table,.tw,.verdict,.flag,.stats,.chart,.q{break-inside:avoid}
+    .wire .row{break-inside:avoid}
+    h1,h2,h3,.h2sub{break-after:avoid;break-inside:avoid}
+    h2{margin-top:32px}
+    header.top{padding-top:0}
+    a{text-decoration:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="eyebrow">Brazilian Contour · Plano de marketing</div>
+  <h1>O plano para transformar US$ 3.000 por mês em vendas previsíveis</h1>
+  <p class="sub">Onde investir, em que ordem, e quanto isso deve devolver em 3, 6, 9 e 12 meses.</p>
+  <div class="meta">26 de agosto de 2026 · Felipe Digital</div>
+</header>
+
+<h2>A regra que rege este plano</h2>
+<div class="h2sub">Primeiro a loja para de vazar. Só depois o dinheiro entra.</div>
+
+<p>Este plano começa no dia seguinte às correções apontadas na auditoria. Não é uma preferência — é matemática.</p>
+
+<p>Hoje a loja segura o cliente no último passo, esconde a informação que decide a compra e anuncia um desconto que não entrega. Colocar mídia em cima disso é pagar para levar mais gente até uma porta emperrada. Os mesmos US$ 3.000 rendem coisas muito diferentes dependendo de quando entram:</p>
+
+<div class="tw"><table>
+  <tr><th>US$ 3.000 investidos</th><th>Visitantes</th><th>Compram</th><th>Faturamento</th></tr>
+  <tr><td>Na loja como está hoje</td><td class="num">3.300</td><td class="num">~13</td><td class="num x">US$ 2.000</td></tr>
+  <tr><td>Na loja corrigida</td><td class="num">3.300</td><td class="num">~33</td><td class="num v">US$ 5.100</td></tr>
+</table></div>
+
+<p>O tráfego é o mesmo. O custo é o mesmo. A diferença de <strong>US$ 3.100 por mês</strong> vem inteira das correções — e ela se repete todo mês, para sempre. É por isso que a ordem não é negociável: <strong>corrigir, depois investir</strong>.</p>
+
+<h2>Onde vão os US$ 3.000</h2>
+<div class="h2sub">Duas frentes com funções diferentes</div>
+
+<div class="tw"><table>
+  <tr><th>Canal</th><th class="num">Verba</th><th>Função</th></tr>
+  <tr><td><strong>Google</strong></td><td class="num">US$ 1.800 <span class="sm">(60%)</span></td><td>Aparecer para quem <strong>já está procurando</strong> uma cinta pós-operatória agora. É demanda pronta: a pessoa fez ou vai fazer cirurgia, o médico mandou comprar, e ela está digitando isso no Google hoje.</td></tr>
+  <tr><td><strong>Meta</strong><br><span class="sm">Instagram e Facebook</span></td><td class="num">US$ 1.200 <span class="sm">(40%)</span></td><td>Criar o desejo em quem ainda não procurou e <strong>resgatar quem visitou e não comprou</strong>. É onde a marca aparece, constrói reconhecimento e recupera o carrinho abandonado.</td></tr>
+</table></div>
+
+<p>A divisão começa favorecendo o Google por um motivo simples: <strong>demanda pronta dá resultado mais rápido</strong>, e o primeiro trimestre precisa provar que o modelo funciona. Conforme o Meta amadurece e o público da marca cresce, a divisão se reequilibra.</p>
+
+<h3>Dentro de cada canal</h3>
+
+<div class="tw"><table>
+  <tr><th>Google · US$ 1.800</th><th class="num"></th><th>Meta · US$ 1.200</th><th class="num"></th></tr>
+  <tr><td>Vitrine de produtos na busca e no Shopping</td><td class="num">US$ 1.000</td><td>Alcance novo — quem nunca ouviu falar da marca</td><td class="num">US$ 700</td></tr>
+  <tr><td>Busca por termos de compra direta</td><td class="num">US$ 600</td><td>Resgate — visitou, colocou no carrinho, não comprou</td><td class="num">US$ 350</td></tr>
+  <tr><td>Busca pelo nome da marca <span class="sm">(protege quem já procura você)</span></td><td class="num">US$ 200</td><td>Teste de novos anúncios e formatos</td><td class="num">US$ 150</td></tr>
+</table></div>
+
+<div class="flag warn">
+  <span class="lab">Um cuidado que economiza dinheiro</span>
+  <p>Anúncio de produto para o corpo tem regra própria nas duas plataformas: foto de "antes e depois", promessa de emagrecimento e texto que aponta o defeito do corpo da pessoa derrubam a conta. A comunicação da marca precisa ser <strong>recuperação e conforto</strong>, não transformação estética. Feito certo desde o começo, isso não custa nada. Feito errado, custa a conta de anúncios.</p>
+</div>
+
+<h2>As três fases</h2>
+<div class="h2sub">O que acontece, e quando</div>
+
+<div class="wire">
+  <div class="row"><div class="n">1</div><div class="c">
+    <div class="t">Meses 1 a 3 · Provar</div>
+    <div class="d">Verba estável em US$ 3.000. O objetivo aqui <em>não é lucro máximo</em> — é descobrir qual produto, qual público e qual anúncio vendem. Ao fim do trimestre, sabemos exatamente o que funciona e quanto custa cada venda.</div>
+  </div></div>
+  <div class="row"><div class="n">2</div><div class="c">
+    <div class="t">Meses 4 a 9 · Escalar</div>
+    <div class="d">A verba sobe <em>somente sobre o que já provou dar retorno</em>. Nada de aumentar no escuro. Entram as campanhas de recompra e o aumento do valor médio do pedido — vender duas peças em vez de uma custa a mesma mídia.</div>
+  </div></div>
+  <div class="row"><div class="n">3</div><div class="c">
+    <div class="t">Meses 10 a 12 · Consolidar</div>
+    <div class="d">A marca já tem histórico, avaliações e público próprio. O custo por venda cai porque parte do faturamento passa a vir de <em>quem já comprou</em> e de quem procura a marca pelo nome — tráfego que custa pouco ou nada.</div>
+  </div></div>
+</div>
+
+<h2>Projeção de 12 meses</h2>
+<div class="h2sub">Investimento e faturamento, trimestre a trimestre</div>
+
+<div class="tw"><table>
+  <tr>
+    <th>Período</th>
+    <th class="num">Investimento<br>por mês</th>
+    <th class="num">Faturamento<br>por mês</th>
+    <th class="num">Retorno por<br>US$ 1 investido</th>
+    <th class="num">Faturamento<br>acumulado</th>
+  </tr>
+  <tr><td><strong>Meses 1–3</strong><br><span class="sm">Provar</span></td><td class="num">US$ 3.000</td><td class="num">US$ 5.100</td><td class="num">US$ 1,70</td><td class="num">US$ 15.300</td></tr>
+  <tr><td><strong>Meses 4–6</strong><br><span class="sm">Escalar</span></td><td class="num">US$ 4.500</td><td class="num">US$ 10.900</td><td class="num">US$ 2,40</td><td class="num">US$ 48.000</td></tr>
+  <tr><td><strong>Meses 7–9</strong><br><span class="sm">Escalar</span></td><td class="num">US$ 6.000</td><td class="num">US$ 17.800</td><td class="num">US$ 3,00</td><td class="num">US$ 101.500</td></tr>
+  <tr><td><strong>Meses 10–12</strong><br><span class="sm">Consolidar</span></td><td class="num">US$ 8.000</td><td class="num">US$ 26.600</td><td class="num">US$ 3,30</td><td class="num v">US$ 181.500</td></tr>
+</table></div>
+
+<div class="chart">
+  <div class="cbar"><span class="lab">1–3</span><span class="track"><i class="inv" style="width:11%"></i><i class="fat" style="width:19%"></i></span><span class="val">US$ 15,3 mil</span></div>
+  <div class="cbar"><span class="lab">4–6</span><span class="track"><i class="inv" style="width:17%"></i><i class="fat" style="width:41%"></i></span><span class="val">US$ 32,7 mil</span></div>
+  <div class="cbar"><span class="lab">7–9</span><span class="track"><i class="inv" style="width:22%"></i><i class="fat" style="width:66%"></i></span><span class="val">US$ 53,5 mil</span></div>
+  <div class="cbar"><span class="lab">10–12</span><span class="track"><i class="inv" style="width:30%"></i><i class="fat" style="width:98%"></i></span><span class="val">US$ 79,9 mil</span></div>
+  <div class="clegend"><span><i class="i-inv"></i> investido no trimestre</span><span><i class="i-fat"></i> faturado no trimestre</span></div>
+</div>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="n">US$ 64.500</div><div class="l">investido em mídia nos 12 meses</div></div>
+  <div class="stat"><div class="n">US$ 181.500</div><div class="l">faturamento projetado no período</div></div>
+  <div class="stat"><div class="n">US$ 2,81</div><div class="l">retorno médio por dólar investido no ano</div></div>
+  <div class="stat"><div class="n">~1.170</div><div class="l">pedidos no ano — e uma base de clientes que compra de novo</div></div>
+</div>
+
+<p>Repare no formato da curva. O primeiro trimestre devolve pouco porque está comprando informação: qual produto vende, para quem, com qual anúncio. Essa informação é o que faz o quarto trimestre faturar <strong>cinco vezes mais</strong> com menos do que o triplo da verba. Quem interrompe no mês 3 paga o preço do aprendizado e vai embora antes de receber o que ele comprou.</p>
+
+<h2>O que sustenta esses números</h2>
+<div class="h2sub">As contas estão abertas</div>
+
+<p>Projeção não é promessa. Estes são os quatro números que sustentam a tabela acima — se eles se confirmarem, o resultado se confirma:</p>
+
+<div class="tw"><table>
+  <tr><th>Premissa</th><th>Hoje</th><th>Meta em 12 meses</th></tr>
+  <tr><td>Valor médio do pedido</td><td class="num">US$ 155</td><td class="num">US$ 185</td></tr>
+  <tr><td>De cada 100 visitantes, quantos compram</td><td class="num">1</td><td class="num">2</td></tr>
+  <tr><td>Custo médio por visitante</td><td class="num">US$ 0,90</td><td class="num">US$ 1,05</td></tr>
+  <tr><td>Parte do faturamento vinda de quem já é cliente</td><td class="num">0%</td><td class="num">20%</td></tr>
+</table></div>
+
+<p>Nenhum deles é otimista. Dois de cada cem visitantes comprando é a média do varejo de moda — a projeção do ano 1 trabalha <em>abaixo</em> da média do mercado. E as duas primeiras linhas não dependem de mídia: dependem das correções da loja e da forma como o produto é apresentado.</p>
+
+<div class="flag warn">
+  <span class="lab">O número que falta</span>
+  <p>Falta um dado que só está com você: <strong>o custo de cada peça</strong>. Com ele, a projeção de faturamento vira projeção de lucro, e conseguimos definir com precisão o teto do que vale pagar por uma venda. É a primeira informação que peço na reunião de início.</p>
+</div>
+
+<h2>Como trabalhamos</h2>
+<div class="h2sub">O que está incluído</div>
+
+<div class="wire">
+  <div class="row"><div class="n">·</div><div class="c">
+    <div class="t">Estratégia e gestão das duas contas</div>
+    <div class="d">Estrutura de campanhas, públicos, verba e otimização diária no Google e no Meta.</div>
+  </div></div>
+  <div class="row"><div class="n">·</div><div class="c">
+    <div class="t">Criação dos anúncios</div>
+    <div class="d">Textos e direção dos criativos, dentro das regras de anúncio para produto corporal — o que evita bloqueio de conta.</div>
+  </div></div>
+  <div class="row"><div class="n">·</div><div class="c">
+    <div class="t">Medição do funil</div>
+    <div class="d">Instalação e conferência do rastreamento de vendas. Sem isso, não existe otimização — existe achismo.</div>
+  </div></div>
+  <div class="row"><div class="n">·</div><div class="c">
+    <div class="t">Relatório mensal e reunião de decisão</div>
+    <div class="d">O que foi investido, o que retornou, o que muda no mês seguinte. Cada aumento de verba é uma decisão sua, com o número na mesa.</div>
+  </div></div>
+</div>
+
+<p class="closing">A verba de mídia é paga à parte, diretamente às plataformas — ela nunca passa por mim. <strong>Escopo, prazo e condições comerciais fecham na reunião de início</strong>, junto com o cálculo de lucro por peça.</p>
+
+<h2>Para começar</h2>
+<div class="h2sub">Três coisas, e o relógio começa a contar</div>
+
+<ol class="steps">
+  <li><b>Aprovar as correções da loja</b>São dias de trabalho, não meses — e valem US$ 3.100 por mês, todo mês, antes de qualquer anúncio.</li>
+  <li><b>Liberar os acessos</b>Loja, contas de anúncio do Google e do Meta, e o custo por peça.</li>
+  <li><b>Confirmar a verba do primeiro trimestre</b>US$ 3.000 por mês, por três meses. É o tempo mínimo para a resposta ser confiável.</li>
+</ol>
+
+<div class="verdict">
+  <p>A loja já tem o mais difícil: produto com demanda real, entrega doméstica em poucos dias e um mercado que procura por isso todo dia no Google. O que falta não é público — é parar de perder o público que já chega, e depois abrir a torneira com método.</p>
+  <p><strong>A cada mês que passa sem isso, o custo não é o do anúncio que não foi feito. É o das vendas que a loja já estaria fazendo.</strong></p>
+</div>
+
+<div class="foot">Brazilian Contour · Plano de marketing e projeção · Felipe Digital · Agosto de 2026</div>
+
+</div>
+
+</body>
+</html>
